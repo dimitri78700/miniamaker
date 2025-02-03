@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[ORM\HasLifecycleCallbacks] // Gestion de created et updatade
+#[ORM\HasLifecycleCallbacks] // Gestion de created et updated
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -55,6 +55,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $is_gpdr = null;
 
+    #[ORM\OneToOne(mappedBy: 'pro', cascade: ['persist', 'remove'])]
+    private ?Detail $detail = null;
+
     /**
      * Constructeur pour gérer les attributs non-nullables par defaut 
      */
@@ -77,7 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->update_at = new \DateTimeImmutable();
     }
 
-    public function getId(): ?int
+     public function getId(): ?int
     {
         return $this->id;
     }
@@ -232,6 +235,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsGpdr(bool $is_gpdr): static
     {
         $this->is_gpdr = $is_gpdr;
+
+        return $this;
+    }
+
+    public function getDetail(): ?Detail
+    {
+        return $this->detail;
+    }
+
+    public function setDetail(Detail $detail): static
+    {
+        // set the owning side of the relation if necessary
+        if ($detail->getPro() !== $this) {
+            $detail->setPro($this);
+        }
+
+        $this->detail = $detail;
 
         return $this;
     }
