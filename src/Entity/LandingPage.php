@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LandingPageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LandingPageRepository::class)]
@@ -25,6 +27,20 @@ class LandingPage
     #[ORM\ManyToOne(inversedBy: 'landingPages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Detail $detail = null;
+
+    #[ORM\OneToOne(mappedBy: 'landing_page', cascade: ['persist', 'remove'])]
+    private ?LpContent $lpContent = null;
+
+    /**
+     * @var Collection<int, TagLandingPage>
+     */
+    #[ORM\OneToMany(targetEntity: TagLandingPage::class, mappedBy: 'landing_page')]
+    private Collection $tagLandingPages;
+
+    public function __construct()
+    {
+        $this->tagLandingPages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +91,53 @@ class LandingPage
     public function setDetail(?Detail $detail): static
     {
         $this->detail = $detail;
+
+        return $this;
+    }
+
+    public function getLpContent(): ?LpContent
+    {
+        return $this->lpContent;
+    }
+
+    public function setLpContent(LpContent $lpContent): static
+    {
+        // set the owning side of the relation if necessary
+        if ($lpContent->getLandingPage() !== $this) {
+            $lpContent->setLandingPage($this);
+        }
+
+        $this->lpContent = $lpContent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TagLandingPage>
+     */
+    public function getTagLandingPages(): Collection
+    {
+        return $this->tagLandingPages;
+    }
+
+    public function addTagLandingPage(TagLandingPage $tagLandingPage): static
+    {
+        if (!$this->tagLandingPages->contains($tagLandingPage)) {
+            $this->tagLandingPages->add($tagLandingPage);
+            $tagLandingPage->setLandingPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTagLandingPage(TagLandingPage $tagLandingPage): static
+    {
+        if ($this->tagLandingPages->removeElement($tagLandingPage)) {
+            // set the owning side to null (unless already changed)
+            if ($tagLandingPage->getLandingPage() === $this) {
+                $tagLandingPage->setLandingPage(null);
+            }
+        }
 
         return $this;
     }
