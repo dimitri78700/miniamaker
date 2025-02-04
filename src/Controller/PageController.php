@@ -8,11 +8,14 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class PageController extends AbstractController
 {
-    #[Route('/page', name: 'app_page')]
+    #[Route('/', name: 'app_homepage', methods: ['GET'])]
     public function index(): Response
     {
-        return $this->render('page/index.html.twig', [
-            'controller_name' => 'PageController',
-        ]);
+        if (!$this->getUser()) {
+            return $this->render('page/lp.html.twig');
+        }
+
+        return $this->render('page/homepage.html.twig');
     }
+
 }

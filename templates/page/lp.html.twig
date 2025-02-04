@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PageController!{% endblock %}
+
+{% block body %}
+    {% include 'components/nav/public.html.twig' %}
+    <h1>LP SANS LOGIN</h1>
+    <a href={{ path('app_login') }}>
+        Connexion
+    </a>
+    {% if app.user %}
+        <a href={{ path('app_logout') }}>
+            Déconnexion
+        </a>
+    {% endif %}
+
+{% endblock %}
