@@ -7,8 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LpContentRepository::class)]
-#[ORM\HasLifecycleCallbacks] // Gestion de created et updated
-
+#[ORM\HasLifecycleCallbacks]
 class LpContent
 {
     #[ORM\Id]
@@ -16,10 +15,14 @@ class LpContent
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\OneToOne(inversedBy: 'lpContent', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?LandingPage $landingPage = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $excerpt = null;
 
     #[ORM\Column]
@@ -28,26 +31,34 @@ class LpContent
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\OneToOne(inversedBy: 'lpContent', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?LandingPage $landing_page = null;
-
     #[ORM\PrePersist]
-    public function setCreatedAtValue() 
+    public function prePersist(): void
     {
         $this->created_at = new \DateTimeImmutable();
         $this->updated_at = new \DateTimeImmutable();
     }
 
     #[ORM\PreUpdate]
-    public function setUpdatedAtValue() 
+    public function preUpdate(): void
     {
         $this->updated_at = new \DateTimeImmutable();
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getLandingPage(): ?LandingPage
+    {
+        return $this->landingPage;
+    }
+
+    public function setLandingPage(LandingPage $landingPage): static
+    {
+        $this->landingPage = $landingPage;
+
+        return $this;
     }
 
     public function getContent(): ?string
@@ -55,7 +66,7 @@ class LpContent
         return $this->content;
     }
 
-    public function setContent(string $content): static
+    public function setContent(?string $content): static
     {
         $this->content = $content;
 
@@ -67,7 +78,7 @@ class LpContent
         return $this->excerpt;
     }
 
-    public function setExcerpt(string $excerpt): static
+    public function setExcerpt(?string $excerpt): static
     {
         $this->excerpt = $excerpt;
 
@@ -94,18 +105,6 @@ class LpContent
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getLandingPage(): ?LandingPage
-    {
-        return $this->landing_page;
-    }
-
-    public function setLandingPage(LandingPage $landing_page): static
-    {
-        $this->landing_page = $landing_page;
 
         return $this;
     }

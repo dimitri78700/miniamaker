@@ -8,13 +8,17 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LandingPageRepository::class)]
-#[ORM\HasLifecycleCallbacks] // Gestion de created et updated
+#[ORM\HasLifecycleCallbacks]
 class LandingPage
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'landingPages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Detail $detail = null;
 
     #[ORM\Column(length: 80)]
     private ?string $type = null;
@@ -25,34 +29,30 @@ class LandingPage
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'landingPages')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Detail $detail = null;
-
-    #[ORM\OneToOne(mappedBy: 'landing_page', cascade: ['persist', 'remove'])]
-    private ?LpContent $lpContent = null;
-
     /**
      * @var Collection<int, Tag>
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'landingPages')]
     private Collection $tags;
 
+    #[ORM\OneToOne(mappedBy: 'landingPage', cascade: ['persist', 'remove'])]
+    private ?LpContent $lpContent = null;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->type = 'miniature';
     }
 
-
     #[ORM\PrePersist]
-    public function setCreatedAtValue() 
+    public function prePersist(): void
     {
         $this->created_at = new \DateTimeImmutable();
         $this->updated_at = new \DateTimeImmutable();
     }
 
     #[ORM\PreUpdate]
-    public function setUpdatedAtValue() 
+    public function preUpdate(): void
     {
         $this->updated_at = new \DateTimeImmutable();
     }
@@ -60,6 +60,18 @@ class LandingPage
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDetail(): ?Detail
+    {
+        return $this->detail;
+    }
+
+    public function setDetail(?Detail $detail): static
+    {
+        $this->detail = $detail;
+
+        return $this;
     }
 
     public function getType(): ?string
@@ -98,35 +110,6 @@ class LandingPage
         return $this;
     }
 
-    public function getDetail(): ?Detail
-    {
-        return $this->detail;
-    }
-
-    public function setDetail(?Detail $detail): static
-    {
-        $this->detail = $detail;
-
-        return $this;
-    }
-
-    public function getLpContent(): ?LpContent
-    {
-        return $this->lpContent;
-    }
-
-    public function setLpContent(LpContent $lpContent): static
-    {
-        // set the owning side of the relation if necessary
-        if ($lpContent->getLandingPage() !== $this) {
-            $lpContent->setLandingPage($this);
-        }
-
-        $this->lpContent = $lpContent;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Tag>
      */
@@ -154,4 +137,20 @@ class LandingPage
         return $this;
     }
 
+    public function getLpContent(): ?LpContent
+    {
+        return $this->lpContent;
+    }
+
+    public function setLpContent(LpContent $lpContent): static
+    {
+        // set the owning side of the relation if necessary
+        if ($lpContent->getLandingPage() !== $this) {
+            $lpContent->setLandingPage($this);
+        }
+
+        $this->lpContent = $lpContent;
+
+        return $this;
+    }
 }

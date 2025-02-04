@@ -12,8 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ORM\HasLifecycleCallbacks]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')] // Gestion de created et updated
-
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')] // Gestion des created et updated
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -40,7 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $update_at = null;
+    private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\Column(length: 80, nullable: true)]
     private ?string $username = null;
@@ -63,33 +62,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
-    #[ORM\OneToOne(mappedBy: 'pro', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'clients')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Subscription $subscription = null;
 
+
     /**
-     * Constructeur pour gérer les attributs non-nullables par defaut 
+     * Constructeur pour gérer les 
+     * attributs non-nullables par défaut
      */
     public function __construct()
     {
-       $this->is_minor = false;
-       $this->is_terms = false;
-       $this->is_gpdr = false;
+        $this->is_minor = false;
+        $this->is_terms = false;
+        $this->is_gpdr = false;
     }
-
+    
     #[ORM\PrePersist]
-    public function setCreatedAtValue() 
+    public function setCreatedAtValue()
     {
         $this->created_at = new \DateTimeImmutable();
-        $this->update_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     #[ORM\PreUpdate]
-    public function setUpdatedAtValue() 
+    public function setUpdatedAtValue()
     {
-        $this->update_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
-     public function getId(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -176,14 +178,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->update_at;
+        return $this->updated_at;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $update_at): static
+    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
-        $this->update_at = $update_at;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
@@ -285,8 +287,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSubscription(Subscription $subscription): static
     {
         // set the owning side of the relation if necessary
-        if ($subscription->getPro() !== $this) {
-            $subscription->setPro($this);
+        if ($subscription->getClients() !== $this) {
+            $subscription->addClient($this);
         }
 
         $this->subscription = $subscription;

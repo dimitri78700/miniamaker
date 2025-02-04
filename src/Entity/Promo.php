@@ -3,11 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\PromoRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PromoRepository::class)]
-#[ORM\HasLifecycleCallbacks] // Gestion de created et updated
+#[ORM\HasLifecycleCallbacks]
 class Promo
 {
     #[ORM\Id]
@@ -18,8 +17,12 @@ class Promo
     #[ORM\Column(length: 80)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?string $percent = null;
+    #[ORM\Column]
+    private ?int $percent = null;
+
+    #[ORM\ManyToOne(inversedBy: 'promos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Subscription $subscription = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -27,20 +30,21 @@ class Promo
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'promos')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Subscription $subscription = null;
-
+    public function __construct()
+    {
+        $this->name = 'MINI' . (new \DateTime())->format('m');
+        $this->percent = 0;
+    }
 
     #[ORM\PrePersist]
-    public function setCreatedAtValue() 
+    public function prePersist(): void
     {
         $this->created_at = new \DateTimeImmutable();
         $this->updated_at = new \DateTimeImmutable();
     }
 
     #[ORM\PreUpdate]
-    public function setUpdatedAtValue() 
+    public function preUpdate(): void
     {
         $this->updated_at = new \DateTimeImmutable();
     }
@@ -62,14 +66,26 @@ class Promo
         return $this;
     }
 
-    public function getPercent(): ?string
+    public function getPercent(): ?int
     {
         return $this->percent;
     }
 
-    public function setPercent(string $percent): static
+    public function setPercent(int $percent): static
     {
         $this->percent = $percent;
+
+        return $this;
+    }
+
+    public function getSubscription(): ?Subscription
+    {
+        return $this->subscription;
+    }
+
+    public function setSubscription(?Subscription $subscription): static
+    {
+        $this->subscription = $subscription;
 
         return $this;
     }
@@ -98,15 +114,8 @@ class Promo
         return $this;
     }
 
-    public function getSubscription(): ?Subscription
+    public function __toString()
     {
-        return $this->subscription;
-    }
-
-    public function setSubscription(?Subscription $subscription): static
-    {
-        $this->subscription = $subscription;
-
-        return $this;
+        $this->name;
     }
 }

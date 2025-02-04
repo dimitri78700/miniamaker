@@ -5,12 +5,10 @@ namespace App\Entity;
 use App\Repository\DetailRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DetailRepository::class)]
-#[ORM\HasLifecycleCallbacks] // Gestion de created et updated
-
+#[ORM\HasLifecycleCallbacks]
 class Detail
 {
     #[ORM\Id]
@@ -25,22 +23,25 @@ class Detail
     private ?string $company_name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $adress = null;
+    private ?string $address = null;
 
-    #[ORM\Column(length: 80)]
+    #[ORM\Column(length: 255)]
     private ?string $city = null;
 
     #[ORM\Column(length: 80)]
     private ?string $postal_code = null;
 
-    #[ORM\Column]
-    private ?bool $portfolio_check = null;
+    #[ORM\Column(length: 80)]
+    private ?string $country = null;
 
     #[ORM\Column(length: 255)]
     private ?string $portfolio_link = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?string $strikes = null;
+    #[ORM\Column]
+    private ?bool $portfolio_check = null;
+
+    #[ORM\Column]
+    private ?int $strikes = null;
 
     #[ORM\Column]
     private ?bool $is_banned = null;
@@ -55,18 +56,15 @@ class Detail
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\Column(length: 80)]
-    private ?string $country = null;
-
     /**
      * @var Collection<int, LandingPage>
      */
-    #[ORM\OneToMany(targetEntity: LandingPage::class, mappedBy: 'detail')]
+    #[ORM\OneToMany(targetEntity: LandingPage::class, mappedBy: 'detail', orphanRemoval: true)]
     private Collection $landingPages;
 
     public function __construct()
     {
-        $this->country = 'FR';
+        $this->country = "FR" ;
         $this->portfolio_check = false;
         $this->strikes = 0;
         $this->is_banned = false;
@@ -74,14 +72,13 @@ class Detail
     }
 
     #[ORM\PrePersist]
-    public function setCreatedAtValue() 
+    public function setCreatedAtValue()
     {
         $this->created_at = new \DateTimeImmutable();
-        
     }
 
     #[ORM\PreUpdate]
-    public function setUpdatedAtValue() 
+    public function setUpdatedAtValue()
     {
         $this->updated_at = new \DateTimeImmutable();
     }
@@ -115,23 +112,22 @@ class Detail
         return $this;
     }
 
-    public function getFullAdress(): ?string
+    public function getFullAddress(): ?string
     {
-        return $this->adress . 
-        '' .   $this->postal_code . 
-        ',' .  $this->city . 
-        ',' .  $this->country;
+        return $this->address . 
+        ', ' . $this->postal_code . 
+        ' ' . $this->city . 
+        ', ' . $this->country;
     }
 
-
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function setAdress(string $adress): static
+    public function setAddress(string $address): static
     {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }
@@ -172,18 +168,6 @@ class Detail
         return $this;
     }
 
-    public function isPortfolioCheck(): ?bool
-    {
-        return $this->portfolio_check;
-    }
-
-    public function setPortfolioCheck(bool $portfolio_check): static
-    {
-        $this->portfolio_check = $portfolio_check;
-
-        return $this;
-    }
-
     public function getPortfolioLink(): ?string
     {
         return $this->portfolio_link;
@@ -196,12 +180,24 @@ class Detail
         return $this;
     }
 
-    public function getStrikes(): ?string
+    public function isPortfolioCheck(): ?bool
+    {
+        return $this->portfolio_check;
+    }
+
+    public function setPortfolioCheck(bool $portfolio_check): static
+    {
+        $this->portfolio_check = $portfolio_check;
+
+        return $this;
+    }
+
+    public function getStrikes(): ?int
     {
         return $this->strikes;
     }
 
-    public function setStrikes(string $strikes): static
+    public function setStrikes(int $strikes): static
     {
         $this->strikes = $strikes;
 
@@ -220,7 +216,6 @@ class Detail
         }
         return $this;
     }
-
 
     public function getPro(): ?User
     {
@@ -258,8 +253,8 @@ class Detail
         return $this;
     }
 
-    // Indispensable 
-    public function __toString(): string
+    // Indispensable
+    public function __toString()
     {
         return $this->company_name;
     }
