@@ -6,6 +6,7 @@ use App\Repository\TagLandingPageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TagLandingPageRepository::class)]
+
 class TagLandingPage
 {
     #[ORM\Id]

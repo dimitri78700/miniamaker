@@ -2,25 +2,24 @@
 
 namespace App\Entity;
 
-use App\Repository\LpContentRepository;
+use App\Repository\PromoRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: LpContentRepository::class)]
+#[ORM\Entity(repositoryClass: PromoRepository::class)]
 #[ORM\HasLifecycleCallbacks] // Gestion de created et updated
-
-class LpContent
+class Promo
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $content = null;
+    #[ORM\Column(length: 80)]
+    private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $excerpt = null;
+    #[ORM\Column(type: Types::BIGINT)]
+    private ?string $percent = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -28,35 +27,49 @@ class LpContent
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\OneToOne(inversedBy: 'lpContent', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'promos')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?LandingPage $landing_page = null;
+    private ?Subscription $subscription = null;
+
+
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue() 
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue() 
+    {
+        $this->updated_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getContent(): ?string
+    public function getName(): ?string
     {
-        return $this->content;
+        return $this->name;
     }
 
-    public function setContent(string $content): static
+    public function setName(string $name): static
     {
-        $this->content = $content;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getExcerpt(): ?string
+    public function getPercent(): ?string
     {
-        return $this->excerpt;
+        return $this->percent;
     }
 
-    public function setExcerpt(string $excerpt): static
+    public function setPercent(string $percent): static
     {
-        $this->excerpt = $excerpt;
+        $this->percent = $percent;
 
         return $this;
     }
@@ -85,14 +98,14 @@ class LpContent
         return $this;
     }
 
-    public function getLandingPage(): ?LandingPage
+    public function getSubscription(): ?Subscription
     {
-        return $this->landing_page;
+        return $this->subscription;
     }
 
-    public function setLandingPage(LandingPage $landing_page): static
+    public function setSubscription(?Subscription $subscription): static
     {
-        $this->landing_page = $landing_page;
+        $this->subscription = $subscription;
 
         return $this;
     }

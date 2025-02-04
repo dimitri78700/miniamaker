@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LandingPageRepository::class)]
+#[ORM\HasLifecycleCallbacks] // Gestion de created et updated
 class LandingPage
 {
     #[ORM\Id]
@@ -22,7 +23,7 @@ class LandingPage
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $update_at = null;
+    private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'landingPages')]
     #[ORM\JoinColumn(nullable: false)]
@@ -40,6 +41,18 @@ class LandingPage
     public function __construct()
     {
         $this->tagLandingPages = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue() 
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue() 
+    {
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -71,14 +84,14 @@ class LandingPage
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->update_at;
+        return $this->updated_at;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $update_at): static
+    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
-        $this->update_at = $update_at;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
