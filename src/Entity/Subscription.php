@@ -20,8 +20,12 @@ class Subscription
     #[ORM\Column]
     private ?bool $is_active = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?string $amount = null;
+    #[ORM\Column(
+    type: 'decimal', 
+    precision: 7, // nombre total ex. 10 000,00
+    scale: 2, // 2 chiffres après la virgule
+    )]
+    private ?int $amount = null;
 
     #[ORM\Column(length: 80)]
     private ?string $frequency = null;
@@ -45,12 +49,16 @@ class Subscription
     public function __construct()
     {
         $this->promos = new ArrayCollection();
+        $this->is_active = false;
+        $this->amount = 99.97;
+        $this->frequency = 'monthly';
     }
 
     #[ORM\PrePersist]
     public function setCreatedAtValue() 
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     #[ORM\PreUpdate]

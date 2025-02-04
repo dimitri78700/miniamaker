@@ -32,11 +32,11 @@ class Promo
     private ?Subscription $subscription = null;
 
 
-
     #[ORM\PrePersist]
     public function setCreatedAtValue() 
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     #[ORM\PreUpdate]

@@ -19,14 +19,14 @@ class Tag
     private ?string $name = null;
 
     /**
-     * @var Collection<int, TagLandingPage>
+     * @var Collection<int, LandingPage>
      */
-    #[ORM\OneToMany(targetEntity: TagLandingPage::class, mappedBy: 'tag')]
-    private Collection $tagLandingPages;
+    #[ORM\ManyToMany(targetEntity: LandingPage::class, inversedBy: 'tags')]
+    private Collection $landingPages;
 
     public function __construct()
     {
-        $this->tagLandingPages = new ArrayCollection();
+        $this->landingPages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -47,31 +47,25 @@ class Tag
     }
 
     /**
-     * @return Collection<int, TagLandingPage>
+     * @return Collection<int, LandingPage>
      */
-    public function getTagLandingPages(): Collection
+    public function getLandingPages(): Collection
     {
-        return $this->tagLandingPages;
+        return $this->landingPages;
     }
 
-    public function addTagLandingPage(TagLandingPage $tagLandingPage): static
+    public function addLandingPage(LandingPage $landingPage): static
     {
-        if (!$this->tagLandingPages->contains($tagLandingPage)) {
-            $this->tagLandingPages->add($tagLandingPage);
-            $tagLandingPage->setTag($this);
+        if (!$this->landingPages->contains($landingPage)) {
+            $this->landingPages->add($landingPage);
         }
 
         return $this;
     }
 
-    public function removeTagLandingPage(TagLandingPage $tagLandingPage): static
+    public function removeLandingPage(LandingPage $landingPage): static
     {
-        if ($this->tagLandingPages->removeElement($tagLandingPage)) {
-            // set the owning side to null (unless already changed)
-            if ($tagLandingPage->getTag() === $this) {
-                $tagLandingPage->setTag(null);
-            }
-        }
+        $this->landingPages->removeElement($landingPage);
 
         return $this;
     }

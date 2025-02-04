@@ -33,20 +33,22 @@ class LandingPage
     private ?LpContent $lpContent = null;
 
     /**
-     * @var Collection<int, TagLandingPage>
+     * @var Collection<int, Tag>
      */
-    #[ORM\OneToMany(targetEntity: TagLandingPage::class, mappedBy: 'landing_page')]
-    private Collection $tagLandingPages;
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'landingPages')]
+    private Collection $tags;
 
     public function __construct()
     {
-        $this->tagLandingPages = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
+
 
     #[ORM\PrePersist]
     public function setCreatedAtValue() 
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     #[ORM\PreUpdate]
@@ -126,32 +128,30 @@ class LandingPage
     }
 
     /**
-     * @return Collection<int, TagLandingPage>
+     * @return Collection<int, Tag>
      */
-    public function getTagLandingPages(): Collection
+    public function getTags(): Collection
     {
-        return $this->tagLandingPages;
+        return $this->tags;
     }
 
-    public function addTagLandingPage(TagLandingPage $tagLandingPage): static
+    public function addTag(Tag $tag): static
     {
-        if (!$this->tagLandingPages->contains($tagLandingPage)) {
-            $this->tagLandingPages->add($tagLandingPage);
-            $tagLandingPage->setLandingPage($this);
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+            $tag->addLandingPage($this);
         }
 
         return $this;
     }
 
-    public function removeTagLandingPage(TagLandingPage $tagLandingPage): static
+    public function removeTag(Tag $tag): static
     {
-        if ($this->tagLandingPages->removeElement($tagLandingPage)) {
-            // set the owning side to null (unless already changed)
-            if ($tagLandingPage->getLandingPage() === $this) {
-                $tagLandingPage->setLandingPage(null);
-            }
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeLandingPage($this);
         }
 
         return $this;
     }
+
 }
