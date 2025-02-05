@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\LoginHistory;
 
+
 class LoginHistoryService
 {
     public function __construct(readonly private EntityManagerInterface $em) {}
@@ -15,7 +16,6 @@ class LoginHistoryService
         $deviceDetector = new DeviceDetector($userAgent);
         $deviceDetector->parse();
 
-        if ($user) {
             $loginHistory = new LoginHistory();
             $loginHistory
                 ->setUser($user)
@@ -26,6 +26,6 @@ class LoginHistoryService
             ;
             $this->em->persist($loginHistory);
             $this->em->flush();
-        }
+        
     }
 }
