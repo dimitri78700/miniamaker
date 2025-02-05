@@ -5,9 +5,14 @@
 {% endblock %}
 
 {% block body %}
+<div class="vh-100 center">
 	{% for flash_error in app.flashes('verify_email_error') %}
 		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 	{% endfor %}
 	{{ form_errors(registrationForm) }}
 
-	{{ form(registrationForm) }}{% endblock %}
+    <div class=" border rounded p-3">
+	{{ form(registrationForm) }}
+    </div>
+</div>
+{% endblock %}

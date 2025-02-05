@@ -38,8 +38,16 @@ class RegistrationFormType extends AbstractType
                 'invalid_message' => 'Les mots de passe doivent etre identiques',
                 'mapped' => false,
                 'attr' => ['class' => 'form-control'],
-                'first_options' => ['label' => 'Mot de passe',],
-                'second_options' => ['label' => 'Confirmer le mot de passe'],
+                'first_options' => [
+                    'label_attr' => ['class' => 'form-label'],
+                    'label' => 'Mot de passe', 
+                    'attr' => ['class' => 'form-control mb-3'],
+                ],
+                'second_options' => [
+                    'label_attr' => ['class' => 'form-label'],
+                    'label' => 'Confirmer le mot de passe', 'attr' => ['class' => 'form-control'],
+                    'attr' => ['class' => 'form-control mb-3'],
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -53,6 +61,10 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('isMinor', CheckboxType::class, [
+                'row_attr' => ['class' => 'form-check'],
+                'label_attr' => ['class' => 'form-check-label'],
+                'attr' => ['class' => 'form-check-input'],
+                'label' => 'Vous confirmez avoir plus de 18 ans',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Vous devez être majeur pour vous inscrire',
@@ -60,6 +72,10 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('isTerms', CheckboxType::class, [
+                'row_attr' => ['class' => 'form-check'],
+                'label_attr' => ['class' => 'form-check-label'],
+                'attr' => ['class' => 'form-check-input'],
+                'label' => 'j\'accepte les conditions d\'utilisation de la plateforme',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Vous devez accepter les conditions d\'utilisation de la plateforme',
@@ -67,6 +83,10 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('isGpdr', CheckboxType::class, [
+                'row_attr' => ['class' => 'form-check'],
+                'label_attr' => ['class' => 'form-check-label'],
+                'attr' => ['class' => 'form-check-input'],
+                'label' => 'j\'accepte la politique de confidentialité et de protection des données',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Vous devez accepter la politique de confidentialité et de protection des données',
