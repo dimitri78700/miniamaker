@@ -1,0 +1,7 @@
+<div class="d-flex align-items-center gap-3">
+{% if app.user %}
+    <a href="{{ path('app_logout') }}" class="btn btn-primary">Déconnexion"></a>
+{% else %}
+    <a href="{{ path('app_login') }}" class="btn btn-primary">Connexion</a>
+{% endif %}
+</div>

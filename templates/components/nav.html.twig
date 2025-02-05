@@ -1,0 +1,9 @@
+{% if 'ROLE_PRO' is app.user.roles %}
+    {% include 'components/nav/pro.html.twig' %}
+{% elseif 'ROLE_AGENT' is app.user.roles %}
+    {% include 'components/nav/agent.html.twig' %}
+{% elseif 'ROLE_CLIENT' is app.user.roles %}
+    {% include 'components/nav/client.html.twig' %}
+{% else %}
+    {% include 'components/nav/public.html.twig' %}
+{% endif %}
