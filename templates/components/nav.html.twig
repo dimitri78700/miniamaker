@@ -1,9 +1,11 @@
-{% if 'ROLE_PRO' is app.user.roles %}
+<div class-"p-3">
+{% if 'ROLE_PRO' in app.user.roles %}
     {% include 'components/nav/pro.html.twig' %}
-{% elseif 'ROLE_AGENT' is app.user.roles %}
+{% elseif 'ROLE_AGENT' in app.user.roles %}
     {% include 'components/nav/agent.html.twig' %}
-{% elseif 'ROLE_CLIENT' is app.user.roles %}
+{% elseif 'ROLE_CLIENT' in app.user.roles %}
     {% include 'components/nav/client.html.twig' %}
 {% else %}
     {% include 'components/nav/public.html.twig' %}
 {% endif %}
+</div>
