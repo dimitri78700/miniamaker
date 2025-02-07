@@ -8,6 +8,8 @@ parameters:
     OPENAI_API_KEY: '%env(OPENAI_API_KEY)%'
     ELEVEN_LABS_API_KEY: '%env(ELEVEN_LABS_API_KEY)%'
     STRIPE_SECRET_KEY: '%env(STRIPE_SECRET_KEY)%'
+    STRIPE_PUBLIC_KEY: '%env(STRIPE_PUBLIC_KEY)%'
+    upload_users_images: '%kernel.project_dir%/public/medias/images/users'
     
 services:
     # default configuration for services in *this* file

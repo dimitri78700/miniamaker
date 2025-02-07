@@ -6,19 +6,29 @@ use App\Form\UserFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\UploaderService;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class UserController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em, UploaderService $us): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if(true) {
+                // TODO verifier le MDP
+
+                $image = $form->get('image')->getData();
+                if ($image !== null) {
+                    $user->setImage($us->uploadFile($image, $user->getImage()));
+                }
+            }
             $em->persist($user);
             $em->flush();
 
