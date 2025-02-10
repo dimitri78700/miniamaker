@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $fullname = null;
 
     #[ORM\Column]
-    private ?bool $is_minor = null;
+    private ?bool $is_major = null;
 
     #[ORM\Column]
     private ?bool $is_terms = null;
@@ -74,9 +74,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, LoginHistory>
      */
-    #[ORM\OneToMany(targetEntity: LoginHistory::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: LoginHistory::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $loginHistories;
-
 
     /**
      * Constructeur pour gérer les 
@@ -84,7 +83,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function __construct()
     {
-        $this->is_minor = false;
+        $this->is_major = false;
         $this->is_terms = false;
         $this->is_gpdr = false;
         $this->loginHistories = new ArrayCollection();
@@ -187,6 +186,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+        $this->updated_at = $created_at;
 
         return $this;
     }
@@ -227,14 +227,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isMinor(): ?bool
+    public function isMajor(): ?bool
     {
-        return $this->is_minor;
+        return $this->is_major;
     }
 
-    public function setIsMinor(bool $is_minor): static
+    public function setIsMajor(bool $is_major): static
     {
-        $this->is_minor = $is_minor;
+        $this->is_major = $is_major;
 
         return $this;
     }
@@ -316,10 +316,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getPathImage(): ?string
     {
-       if ($this->image == "default.png" || $this->image == null) {
-        return '/medias/images/users/default.png';
-       }
-        return '/medias/images/users/'.$this->image;
+        if ($this->image == 'default.png' || $this->image == null) {
+            return '/medias/images/users/default.png';
+        }
+        return '/medias/images/users/' . $this->image;
     }
 
     public function setImage(string $image): static
@@ -361,11 +361,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function isComplete(): bool
     {
-       if (
-        !empty ($this->username) && !empty ($this->fullname)) {
-        return true;
-       }
+        if (!empty($this->username) && !empty($this->fullname)) {
+            return true;
+        }
 
-       return false;
+        return false;
     }
 }
