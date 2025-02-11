@@ -177,6 +177,19 @@ ul { list-style: none; }
     line-height: 1.75rem;
 }
 
+.add {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding: 1rem 2rem;
+    /* margin: .5rem; */
+    font-size: .85rem;
+    color: #808080;
+    text-decoration: none;
+    background-color: #efefef;
+    border: 2px dashed #cccccc;
+}
+
 /* Animation */
 @keyframes fromRightToLeft {
     0% {
