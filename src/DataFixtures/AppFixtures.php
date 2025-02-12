@@ -10,6 +10,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Entity\Discussion;
+use App\Entity\Message;
 
 class AppFixtures extends Fixture
 {
@@ -144,6 +146,44 @@ class AppFixtures extends Fixture
         $admin->setIsVerified(true);
         
         $manager->persist($admin);
+
+        $manager->flush();
+
+
+        $admin2 = new User();
+        $admin2->setEmail('admin2@admin.com');
+        $admin2->setRoles(['ROLE_ADMIN']);
+        $admin2->setPassword($this->passwordHasher->hashPassword($admin2, 'admin123'));
+        $admin2->setUsername('Martin');
+        $admin2->setFullname('Admin Martin');
+        $admin2->setIsMajor(true);
+        $admin2->setIsTerms(true);
+        $admin2->setIsGpdr(true);
+        $admin2->setIsVerified(true);
+        
+        $manager->persist($admin2);
+
+
+        // conversation entre 2 utilisateurs
+
+        $discussion = new Discussion();
+        $discussion->setSender($admin);
+        $discussion->setReceiver($admin2);
+        $discussion->setSubject($admin->getUsername() . ' et ' . $admin2->getUsername() . ' sont en conversation');
+        $discussion->setIsArchive(false);
+        $discussion->setCreatedAt(new \DateTimeImmutable());
+    
+        $manager->persist($discussion);
+
+        for ($i = 0; $i < 10; $i++) {
+            $message = new Message();
+            $message->setDiscussion($discussion);
+            $message->setUser($i % 2 === 0 ? $admin : $admin2);
+            $message->setContent($faker->sentence(10));
+            $message->setCreatedAt(new \DateTimeImmutable());
+            $message->setStatus(true);
+            $manager->persist($message);
+        }
 
         $manager->flush();
     }
