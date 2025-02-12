@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Form;
+
 use App\Entity\Detail;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -14,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+
 class DetailFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -31,7 +34,7 @@ class DetailFormType extends AbstractType
                     )
                     ],
                     'choices' => [
-                        'Professionnel' => 'Pro',
+                        'Prestataire' => 'Pro',
                         'Agent d\'influenceur' => 'Agent',
                     ]
             ])
@@ -138,6 +141,7 @@ class DetailFormType extends AbstractType
             ])
         ;
     }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

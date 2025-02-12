@@ -59,7 +59,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('isMinor', CheckboxType::class, [
+            ->add('isMajor', CheckboxType::class, [
                 'row_attr' => ['class' => 'form-check'],
                 'label_attr' => ['class' => 'form-check-label'],
                 'attr' => ['class' => 'form-check-input'],
