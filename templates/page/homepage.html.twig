@@ -16,7 +16,7 @@
     </section>
 
     <!-- Section Fonctionnalités -->
-    <section class="p-lg">
+    <section class="p-md">
         <div class="container-md">
             <h2 class="text-3xl text-center">Nos fonctionnalités</h2>
             <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
@@ -38,6 +38,37 @@
             </div>
         </div>
     </section>
+
+    <!-- Section Pricing -->
+<!-- Section Pricing -->
+<section class="p-lg">
+    <div class="container-md text-center">
+        <h2 class="text-3xl">Nos Abonnements</h2>
+        <p class="help">Choisissez le plan qui vous convient parmi nos offres.</p>
+        <div class="row mt-5 justify-content-center">
+            <!-- Plan Mensuel -->
+            <div class="col-md-5 mb-4">
+                <div class="card pricing-card">
+                    <h3 class="text-2xl">Plan Mensuel</h3>
+                    <p class="text-xl"><strong>99€ / mois</strong></p>
+                    <p>Accès complet à toutes les fonctionnalités essentielles</p>
+                    <a href="{{ path('app_profile') }}" class="btn btn-danger rounded-pill px-3">Souscrire</a>
+                </div>
+            </div>
+            <!-- Plan Annuel -->
+            <div class="col-md-5 mb-4">
+                <div class="card pricing-card">
+                    <h3 class="text-2xl">Plan Annuel</h3>
+                    <p class="text-xl"><strong>990€ / an</strong></p>
+                    <p>Profitez d'une réduction en optant pour le paiement annuel</p>
+                    <a href="{{ path('app_profile') }}" class="btn btn-danger rounded-pill px-3">Souscrire</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
 <!-- Section Témoignages avec effet de mouvement -->
 <section class="p-lg" style="background-color: #f0f0f0; overflow: hidden;">
