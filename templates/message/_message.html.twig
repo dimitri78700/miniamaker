@@ -1,0 +1,13 @@
+        {% for message in messages %}
+            {% set isUser = message.user == app.user %}
+            {% set messageClass = isUser ? 'message-sent' : 'message-received' %}
+            <div class="message {{ messageClass }}">
+                <div class="message-author">{{ message.user.username }}</div>
+                <div class="message-content">{{ message.content }}</div>
+                <div class="message-time">{{ message.createdAt|date('d/m/Y H:i') }}</div>
+            </div>
+        {% else %}
+            <div class="no-messages">
+                Aucun message pour cette discussion.
+            </div>
+        {% endfor %}

@@ -1,0 +1,29 @@
+{# templates/message/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Discussion
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('assets/styles/app.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div class="container discussion-container">
+		<h1 class="discussion-title">Discussion</h1>
+		<form hx-post="{{ path('app_message_show', { id: app.request.get('id') }) }}" hx-target="#messages-container" hx-swap="beforebegin" class="message-input-container">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token('app_message') }}">
+			<input type="text" name="message" id="message" class="form-control" placeholder="Écrivez ici">
+			<button type="submit" class="btn btn-primary">{{ ux_icon('mdi:send', { class: 'h-1' }) }}</button>
+		</form>
+		{# Conteneur des messages #}
+		<div class="messages-container">
+			{{include ('message/_message.html.twig', { messages: messages })}}
+		</div>
+		{# Bouton retour discussions #}
+		<a href="{{ path('app_message') }}" class="back-to-list">
+			Retour aux discussions
+		</a>
+	</div>
+{% endblock %}
