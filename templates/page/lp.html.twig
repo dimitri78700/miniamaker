@@ -27,4 +27,45 @@
         {% include 'components/boxes.html.twig' %}
     </section>
 
+        <!-- Nouvelle section : Appel à l'action / Inscription à la newsletter -->
+    <section class="p-lg" style="background-color: #fff; border-top: 2px solid var(--bs-primary); border-bottom: 2px solid var(--bs-primary);">
+        <div class="container-md text-center">
+            <h2>Rejoignez notre communauté</h2>
+            <p class="help">Inscrivez-vous à notre newsletter pour recevoir les dernières actualités et conseils.</p>
+            <form action="#" method="post" class="mt-4" style="max-width: 600px; margin: 0 auto;">
+                <div style="display: flex; gap: 1rem;">
+                    <input type="email" name="email" placeholder="Votre email" class="form-control" style="flex-grow: 1;">
+                    <button type="submit" class="btn btn-primary">S'inscrire</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+<!-- Section Témoignages avec effet de mouvement -->
+<section class="p-lg" style="background-color: #f0f0f0; overflow: hidden;">
+    <div class="container-md">
+        <h2 class="text-3xl text-center">Témoignages</h2>
+        <div class="box-items left" style="gap: 1rem;">
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Grâce à Miniamaker, j'ai pu augmenter mon audience en quelques mois."</p>
+                <p style="font-weight: bold;">- Alex, Créateur de contenu</p>
+            </div>
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Une plateforme intuitive et efficace pour booster ma présence en ligne."</p>
+                <p style="font-weight: bold;">- Marie, Influenceuse</p>
+            </div>
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Un service client exceptionnel et une interface facile à utiliser."</p>
+                <p style="font-weight: bold;">- Julien, Blogueur</p>
+            </div>
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Miamaker a transformé la façon dont je gère mes projets."</p>
+                <p style="font-weight: bold;">- Sophie, Entrepreneuse</p>
+            </div>
+            <!-- Vous pouvez ajouter d'autres témoignages ici -->
+        </div>
+    </div>
+</section>
+
+
 {% endblock %}

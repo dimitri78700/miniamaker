@@ -13,10 +13,14 @@ body {
     font-family: "Inter Tight", sans-serif;
     letter-spacing: 0.02rem;
     line-height: 1.5;
-    background-color: #f8f9fa;
-    background-image: url("/medias/bg.svg");
-    background-size: cover;
+    background: #f8fafc;
 }
+
+.indigo-200 { color: #c7d2fe; }
+.fuschia-200 { color: #f5d0fe; }
+
+.bg-indigo-200 { background-color: #dde3ff; }
+.bg-fuschia-200 { background-color: #f5d4fe; }
 
 /* Layout */
 .container-xs { max-width: 400px; }
@@ -29,6 +33,8 @@ body {
     display: grid;
     place-items: center;
 }
+
+.mx-end { align-self: flex-end; }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
@@ -48,8 +54,31 @@ h1, h2, h3, h4, h5, h6 {
     color: #555;
 }
 
+/* Components */
 .card {
     border: 0;
+}
+
+.bubble {
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    margin-bottom: .25rem;
+    border-radius: 0.5rem;
+    max-width: 50%;
+    width: fit-content;
+}
+
+.add {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding: 1rem 2rem;
+    /* margin: .5rem; */
+    font-size: .85rem;
+    color: #808080;
+    text-decoration: none;
+    background-color: #efefef;
+    border: 2px dashed #cccccc;
 }
 
 .text-xl { font-size: 3rem; }
@@ -73,7 +102,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .p-md { padding: 3rem 0; }
 .p-lg { padding: 6rem 0; }
-.p-xl { padding: 8rem 0; }
+.p-xl { padding: 8rem 0; background-color: #c8e3fe; }
 
 /* Colors */
 
@@ -176,169 +205,6 @@ ul { list-style: none; }
     font-size: 2rem;
     line-height: 1.75rem;
 }
-
-.add {
-    width: 100%;
-    display: grid;
-    place-items: center;
-    padding: 1rem 2rem;
-    /* margin: .5rem; */
-    font-size: .85rem;
-    color: #808080;
-    text-decoration: none;
-    background-color: #efefef;
-    border: 2px dashed #cccccc;
-}
-
-/* 🌸🌟 Design pastel et relief pour le chat */
-
-/* 🌿 Conteneur principal : Centré verticalement et horizontalement */
-
-/* 🗨️ Boîte de discussion centrée */
-.discussion-container {
-    width: 80%;
-    max-width: 700px;
-    margin: auto;
-    padding: 30px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-height: 80vh;
-}
-
-/* 🏷️ Titre */
-.discussion-title {
-    text-align: center;
-    font-size: 1.7rem;
-    color: #444;
-    margin-bottom: 15px;
-}
-
-/* 📝 Formulaire d’envoi : positionné au-dessus des messages */
-.message-input-container {
-    background-color: white;
-    border-radius: 12px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Espacement entre input et bouton */
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
-    margin-bottom: 15px; /* Séparation avec les messages */
-}
-
-/* 🎤 Champ de texte */
-input#message {
-    flex-grow: 1;
-    border: none;
-    padding: 14px;
-    border-radius: 10px;
-    font-size: 1rem;
-    outline: none;
-    background-color: #F1F1F1;
-}
-
-/* ✈️ Bouton d’envoi */
-button[type="submit"] {
-    background-color: #2C2C2C;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: none;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-button[type="submit"]:hover {
-    background-color: #1D1D1D;
-}
-
-/* 📩 Conteneur des messages */
-.messages-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Espacement accru entre les messages */
-    padding: 15px;
-    max-height: 500px;
-    overflow-y: auto;
-    border-radius: 10px;
-    background-color: #F9F9F9;
-}
-
-/* 📩 Style des messages */
-.message {
-    max-width: 75%;
-    padding: 15px 18px;
-    border-radius: 18px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    font-size: 1.1rem;
-    word-wrap: break-word;
-}
-
-/* 🌸 Messages envoyés */
-.message-sent {
-    align-self: flex-end;
-    background-color: #FFD6E0;
-    text-align: right;
-    border-top-right-radius: 5px;
-}
-
-/* 🟡 Messages reçus */
-.message-received {
-    align-self: flex-start;
-    background-color: #FFE4B5;
-    text-align: left;
-    border-top-left-radius: 5px;
-}
-
-/* 📝 Auteur du message */
-.message-author {
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 6px;
-}
-
-/* ✉️ Contenu du message */
-.message-content {
-    font-size: 1.1rem;
-    margin-bottom: 6px;
-    color: #222;
-}
-
-/* ⏳ Horodatage */
-.message-time {
-    font-size: 0.9rem;
-    color: #666;
-    text-align: right;
-}
-
-/* 📭 Aucun message */
-.no-messages {
-    text-align: center;
-    color: #888;
-    font-style: italic;
-}
-
-/* 🔙 Lien de retour */
-.back-to-list {
-    display: block;
-    text-align: center;
-    margin-top: 25px;
-    color: #666;
-    text-decoration: none;
-    font-size: 1rem;
-}
-
-.back-to-list:hover {
-    text-decoration: underline;
-}
-
 
 /* Animation */
 @keyframes fromRightToLeft {

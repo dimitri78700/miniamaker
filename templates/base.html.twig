@@ -20,6 +20,14 @@
         {% endblock %}
     </head>
     <body>
+         {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                {{ include('components/nav/_partials/toast.html.twig', {
+                    'label': 'warning',
+                    'message': message
+                }) }}
+            {% endfor %}
+        {% endfor %}
         {% block body %}{% endblock %}
     </body>
 </html>
