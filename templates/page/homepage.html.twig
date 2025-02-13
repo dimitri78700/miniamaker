@@ -1,8 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PageController!{% endblock %}
+{% block title %}BIENVENUE SUR MINIAMAKER{% endblock %}
 
 {% block body %}
     {% include 'components/nav.html.twig' %}
-    <h1>HOME PAGE</h1>
+    <header class="p-xl center">
+        <div class="container-md text-center">
+            <div class="">
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+            </div>
+            <p class="">La plateforme dédiée à la Creator Economy</p>
+            <h1 class="text-3xl">
+                Mettez vos efforts dans votre contenu, les pros s'occupent du reste.
+            </h1>
+            <a href="{{ path('app_login') }}" class="btn btn-primary">
+                Créer un compte gratuitement
+            </a>
+        </div>
+    </header>
+
+    <section class="bg-white py-5">
+        {% include 'components/boxes.html.twig' %}
+    </section>
+
 {% endblock %}

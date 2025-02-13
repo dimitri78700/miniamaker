@@ -4,9 +4,9 @@
 {% block title %}Liste de vos discussions{% endblock %}
 
 {% block body %}
+{% include 'components/nav/_partials/logo.html.twig' %}
 <div class="container mt-5">
     <h1 class="text-center mb-4">Liste de vos discussions</h1>
-
     <div class="d-flex flex-column gap-3">
         {% for item in app.user.discussions %}
             {# Déterminer la couleur de fond pastel pour l'alternance #}
