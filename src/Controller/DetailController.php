@@ -15,7 +15,7 @@ final class DetailController extends AbstractController
         private EntityManagerInterface $em,
         private DetailRepository $dr
     ){}
-    #[Route('/detail', name: 'app_detail')]
+    #[Route('/detail', name: 'app_detail', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $detail = new Detail();

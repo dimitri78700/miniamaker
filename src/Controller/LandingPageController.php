@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 final class LandingPageController extends AbstractController
 {
-    #[Route('/landing/add', name: 'lp_add')]
+    #[Route('/landing/add', name: 'lp_add', methods: ['GET', 'POST'])]
     public function add(): Response
     {   
         $user = $this->getUser()->getRoles()[0];
@@ -18,7 +18,7 @@ final class LandingPageController extends AbstractController
         if($user !== "ROLE_PRO" && $user !== "ROLE_AGENT") {
                 return $this->redirectToRoute('app_detail');
         }
-        
+        //TODO : Formulaire d'ajout de message
         return $this->render('landing_page/index.html.twig', [
             'controller_name' => 'LandingPageController',
         ]);
