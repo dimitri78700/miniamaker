@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La crème des pros au service du contenu{% endblock %}
+
+{% block body %}
+    {% include 'components/nav.html.twig' %}
+    <header class="p-xl center">
+        <div class="container-md text-center">
+            <div class="">
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+                {{ ux_icon('mdi:star', { class: 'text-warning h-2'}) }}
+            </div>
+            <p class="">La plateforme dédiée à la Creator Economy</p>
+            <h1 class="text-3xl">
+                Mettez vos efforts dans votre contenu, les pros s'occupent du reste.
+            </h1>
+            <a href="{{ path('app_login') }}" class="btn btn-primary">
+                Créer un compte gratuitement
+            </a>
+        </div>
+    </header>
+
+    <section class="bg-white py-5">
+        {% include 'components/boxes.html.twig' %}
+    </section>
+
+<!-- Section Miniatures réalisées par des pros -->
+<section class="p-lg">
+    <div class="container-md text-center">
+        <h2 class="text-3xl">Des miniatures créées par des pros</h2>
+        <p class="help">
+            Découvrez des exemples de miniatures réalisées par les meilleurs experts de leur domaine. 
+            Leur savoir-faire garantit que votre investissement sera optimisé et vous aidera à vous démarquer.
+        </p>
+        <div class="row mt-5">
+            <div class="col-md-6 mb-3">
+                <img src="{{ asset('medias/images/minia1.jpg') }}" alt="Exemple Miniature Pro 1" class="img-fluid" style="border: 2px solid var(--bs-primary); border-radius: 4px;">
+            </div>
+            <div class="col-md-6 mb-3">
+                <img src="{{ asset('medias/images/minia2.jpg') }}" alt="Exemple Miniature Pro 2" class="img-fluid" style="border: 2px solid var(--bs-primary); border-radius: 4px;">
+            </div>
+            <div class="col-md-6 mb-3">
+                <img src="{{ asset('medias/images/minia3.jpg') }}" alt="Exemple Miniature Pro 3" class="img-fluid" style="border: 2px solid var(--bs-primary); border-radius: 4px;">
+            </div>
+            <div class="col-md-6 mb-3">
+                <img src="{{ asset('medias/images/minia4.jpg') }}" alt="Exemple Miniature Pro 4" class="img-fluid" style="border: 2px solid var(--bs-primary); border-radius: 4px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Section Témoignages avec effet de mouvement -->
+<section class="p-lg" style="background-color: #f0f0f0; overflow: hidden;">
+    <div class="container-md">
+        <h2 class="text-3xl text-center">Témoignages</h2>
+        <div class="box-items left" style="gap: 1rem;">
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Grâce à Miniamaker, j'ai pu augmenter mon audience en quelques mois."</p>
+                <p style="font-weight: bold;">- Alex, Créateur de contenu</p>
+            </div>
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Une plateforme intuitive et efficace pour booster ma présence en ligne."</p>
+                <p style="font-weight: bold;">- Marie, Influenceuse</p>
+            </div>
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Un service client exceptionnel et une interface facile à utiliser."</p>
+                <p style="font-weight: bold;">- Julien, Blogueur</p>
+            </div>
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Miamaker a transformé la façon dont je gère mes projets."</p>
+                <p style="font-weight: bold;">- Sophie, Entrepreneuse</p>
+            </div>
+            <!-- Vous pouvez ajouter d'autres témoignages ici -->
+        </div>
+    </div>
+</section>
+
+        <!-- Nouvelle section : Appel à l'action / Inscription à la newsletter -->
+    <section class="p-lg" style="background-color: #fff; border-top: 2px solid var(--bs-primary); border-bottom: 2px solid var(--bs-primary);">
+        <div class="container-md text-center">
+            <h2>Rejoignez notre communauté</h2>
+            <p class="help">Inscrivez-vous à notre newsletter pour recevoir les dernières actualités et conseils.</p>
+            <form action="#" method="post" class="mt-4" style="max-width: 600px; margin: 0 auto;">
+                <div style="display: flex; gap: 1rem;">
+                    <input type="email" name="email" placeholder="Votre email" class="form-control" style="flex-grow: 1;">
+                    <button type="submit" class="btn btn-primary">S'inscrire</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+        <!-- Pied de page -->
+    <footer class="p-md" style="background-color: var(--bs-primary); color: #fff;">
+        <div class="container-md text-center">
+            &copy; {{ "now"|date("Y") }} Miniamaker. Tous droits réservés.
+        </div>
+    </footer>
+{% endblock %}

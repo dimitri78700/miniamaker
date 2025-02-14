@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de vos discussions{% endblock %}
+
+{% block body %}
+{% include 'components/nav/_partials/logo.html.twig' %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Liste de vos discussions</h1>
+    <div class="d-flex flex-column gap-3">
+        {% for item in app.user.discussions %}
+            {# Déterminer la couleur de fond pastel pour l'alternance #}
+            {% set bgColor = loop.index is odd ? 'rgba(255, 249, 219, 0.8)' : 'rgba(255, 221, 230, 0.8)' %}
+
+            <div class="p-3 shadow-sm" style="
+                background-color: {{ bgColor }};
+                border-radius: 10px;
+                backdrop-filter: blur(5px);
+            ">
+                <div class="d-flex align-items-center">
+                    {# Avatar #}
+                    <img src="{{ asset('medias/images/users/default.png') }}" alt="{{ item.subject }}" width="40" class="rounded-circle me-3">
+
+                    <div class="flex-grow-1">
+                        {# Sujet #}
+                        <a href="{{ path('app_message_show', { id: item.id }) }}" class="text-danger text-decoration-none">
+                            <p class="fs-5 fw-bold mb-1">{{ item.subject }}</p>
+                        </a>
+                        {# Dernier message (si disponible) #}
+                        {% if item.messages|length > 0 %}
+                            <p class="text-muted" style="font-size: 0.9rem;">
+                                {{ item.messages|last.content|slice(0, 50) }}{% if item.messages|last.content|length > 50 %}...{% endif %}
+                            </p>
+                        {% else %}
+                            <p class="text-muted" style="font-size: 0.9rem;">Aucun message pour cette discussion.</p>
+                        {% endif %}
+                    </div>
+
+                    {# Date #}
+                    <div class="text-muted text-end" style="font-size: 0.9rem;">
+                        {{ item.createdAt|time_diff }}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">Vous n'avez aucune discussion.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

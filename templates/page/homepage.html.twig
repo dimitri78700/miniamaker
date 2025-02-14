@@ -1,0 +1,107 @@
+{# templates/homepage.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Miniamaker{% endblock %}
+
+{% block body %}
+    {% include 'components/nav.html.twig' %}
+
+    <!-- Section Héro avec image de fond -->
+    <section class="p-xl center" style="background-image: url('/medias/hero-bg.jpg'); background-size: cover; background-position: center; color: #fff;">
+        <div class="container-md text-center">
+            <h1 class="text-1xl" style="font-weight: bold; color: black;">Bienvenue sur Miniamaker</h1>
+            <p class="help">La solution pour booster votre présence dans la Creator Economy</p>
+            <a href="{{ path('app_register') }}" class="btn btn-primary">Commencez dès maintenant</a>
+        </div>
+    </section>
+
+    <!-- Section Fonctionnalités -->
+    <section class="p-md">
+        <div class="container-md">
+            <h2 class="text-3xl text-center">Nos fonctionnalités</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+                <div class="card" style="flex: 1; min-width: 280px; max-width: 300px; padding: 1rem; text-align: center;">
+                    {{ ux_icon('mdi:rocket', { class: 'h-3', style: 'color: var(--bs-primary);' }) }}
+                    <h3>Lancement rapide</h3>
+                    <p>Accédez rapidement aux outils qui boostent votre activité.</p>
+                </div>
+                <div class="card" style="flex: 1; min-width: 280px; max-width: 300px; padding: 1rem; text-align: center;">
+                    {{ ux_icon('mdi:account-group', { class: 'h-3', style: 'color: var(--bs-success);' }) }}
+                    <h3>Communauté</h3>
+                    <p>Rejoignez une communauté de créateurs passionnés.</p>
+                </div>
+                <div class="card" style="flex: 1; min-width: 280px; max-width: 300px; padding: 1rem; text-align: center;">
+                    {{ ux_icon('mdi:chart-line', { class: 'h-3', style: 'color: var(--bs-info);' }) }}
+                    <h3>Analyses approfondies</h3>
+                    <p>Suivez vos performances et optimisez vos contenus.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Pricing -->
+<!-- Section Pricing -->
+<section class="p-lg">
+    <div class="container-md text-center">
+        <h2 class="text-3xl">Nos Abonnements</h2>
+        <p class="help">Choisissez le plan qui vous convient parmi nos offres.</p>
+        <div class="row mt-5 justify-content-center">
+            <!-- Plan Mensuel -->
+            <div class="col-md-5 mb-4">
+                <div class="card pricing-card">
+                    <h3 class="text-2xl">Plan Mensuel</h3>
+                    <p class="text-xl"><strong>99€ / mois</strong></p>
+                    <p>Accès complet à toutes les fonctionnalités essentielles</p>
+                    <a href="{{ path('app_profile') }}" class="btn btn-danger rounded-pill px-3">Souscrire</a>
+                </div>
+            </div>
+            <!-- Plan Annuel -->
+            <div class="col-md-5 mb-4">
+                <div class="card pricing-card">
+                    <h3 class="text-2xl">Plan Annuel</h3>
+                    <p class="text-xl"><strong>990€ / an</strong></p>
+                    <p>Profitez d'une réduction en optant pour le paiement annuel</p>
+                    <a href="{{ path('app_profile') }}" class="btn btn-danger rounded-pill px-3">Souscrire</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Section Témoignages avec effet de mouvement -->
+<section class="p-lg" style="background-color: #f0f0f0; overflow: hidden;">
+    <div class="container-md">
+        <h2 class="text-3xl text-center">Témoignages</h2>
+        <div class="box-items left" style="gap: 1rem;">
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Grâce à Miniamaker, j'ai pu augmenter mon audience en quelques mois."</p>
+                <p style="font-weight: bold;">- Alex, Créateur de contenu</p>
+            </div>
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Une plateforme intuitive et efficace pour booster ma présence en ligne."</p>
+                <p style="font-weight: bold;">- Marie, Influenceuse</p>
+            </div>
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Un service client exceptionnel et une interface facile à utiliser."</p>
+                <p style="font-weight: bold;">- Julien, Blogueur</p>
+            </div>
+            <div class="box-item">
+                <p class="mb-4" style="font-style: italic;">"Miamaker a transformé la façon dont je gère mes projets."</p>
+                <p style="font-weight: bold;">- Sophie, Entrepreneuse</p>
+            </div>
+            <!-- Vous pouvez ajouter d'autres témoignages ici -->
+        </div>
+    </div>
+</section>
+
+
+    <!-- Pied de page -->
+    <footer class="p-md" style="background-color: var(--bs-primary); color: #fff;">
+        <div class="container-md text-center">
+            &copy; {{ "now"|date("Y") }} Miniamaker. Tous droits réservés.
+        </div>
+    </footer>
+{% endblock %}
+

@@ -1,0 +1,27 @@
+{# templates/subscription/return.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+{% include 'components/nav.html.twig' %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body text-center">
+            {% if status == 'success' %}
+                <h2 class="text-success">{{ title }}</h2>
+                <p>{{ message }}</p>
+                <i class="fa fa-check-circle fa-4x text-success"></i>
+            {% elseif status == 'cancel' %}
+                <h2 class="text-danger">{{ title }}</h2>
+                <p>{{ message }}</p>
+                <i class="fa fa-times-circle fa-4x text-danger"></i>
+            {% else %}
+                <h2 class="text-warning">{{ title }}</h2>
+                <p>{{ message }}</p>
+            {% endif %}
+            <a href="{{ path('app_profile') }}" class="btn btn-primary mt-3">Retour à votre profil</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+<div class="d-flex align-items-center gap-3">
+	{% if app.user %}
+		<a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="{{ path('app_profile') }}">
+			<img src="{{ asset('medias/images/users/default.png') }}" alt="{{ app.user.username ?? '' }}" class="rounded-circle" width="30" >
+			{{ app.user.username ?? '' }}
+		</a>
+		<a href="{{ path('app_logout') }}" class="btn btn-primary">
+			Déconnexion
+		</a>
+	{% else %}
+		<a href="{{ path('app_login') }}" class="btn btn-primary">
+			Connexion
+		</a>
+		<a href="{{ path('app_register') }}" class="btn btn-primary">
+			Inscription
+		</a>
+	{% endif %}
+</div>
